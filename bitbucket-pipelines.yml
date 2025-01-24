@@ -1,0 +1,11 @@
+pipelines:
+  default:
+    - step:
+        name: Mirror to GitHub
+        image: atlassian/default-image:3
+        script:
+          - git config --global user.email "$BITBUCKET_USER_EMAIL"
+          - git config --global user.name "$BITBUCKET_USER_NAME"
+          - git remote add github "https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/SURGE-GLOBAL-ENGINEERING/reader-scout-custom-template.git"
+          - git push github --all
+          - git push github --tags
