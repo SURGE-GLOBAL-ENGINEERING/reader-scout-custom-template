@@ -12,8 +12,14 @@ const CartStoreExample = dynamic(
   { ssr: false }
 );
 
+const navigation = [
+  { href: "/", label: "Home" },
+  { href: "/books", label: "Books" },
+] as const;
+
 export const metadata: Metadata = {
   title: "Home",
+  description: "A comprehensive starter template for author websites",
 };
 
 export default function HomePage() {
@@ -25,22 +31,16 @@ export default function HomePage() {
           {/* Add navigation links */}
           <nav>
             <ul className="flex gap-6">
-              <li>
-                <Link
-                  href="/"
-                  className="text-foreground hover:text-primary transition-colors"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/books"
-                  className="text-foreground hover:text-primary transition-colors"
-                >
-                  Books
-                </Link>
-              </li>
+              {navigation.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-foreground hover:text-primary transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
           <ThemeToggle />
@@ -61,6 +61,7 @@ export default function HomePage() {
             width={120}
             height={25}
             priority
+            quality={90}
           />
           <p className="text-muted-foreground max-w-2xl mx-auto">
             A comprehensive starter template with Next.js 14+, TypeScript,
