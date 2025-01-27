@@ -15,23 +15,10 @@ function replaceInFile(filePath, replacements) {
   fs.writeFileSync(filePath, content);
 }
 
-// Helper function to remove files
-function removeFiles(projectPath, filesToRemove) {
-  filesToRemove.forEach((file) => {
-    const filePath = path.join(projectPath, file);
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
-  });
-}
-
 // Main setup function
 function setupAuthorWebsite(projectName, authorName) {
   const projectPath = path.resolve(projectName);
   const siteName = authorName.replace(/\s+/g, "-").toLowerCase();
-
-  // Remove template setup files
-  removeFiles(projectPath, ["template-setup.mjs", "bitbucket-pipelines.yml"]);
 
   // Update package.json
   const packageJsonPath = path.join(projectPath, "package.json");

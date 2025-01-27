@@ -55,6 +55,7 @@ export const useCartStore = create<CartState>()(
   )
 );
 
+// Selector hook for better performance and type safety
 export const useCart = () =>
   useCartStore((state) => ({
     items: state.items,

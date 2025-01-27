@@ -1,12 +1,20 @@
 import { type Metadata } from "next";
 import { Inter } from "next/font/google";
 import { siteConfig } from "@/config/site";
-import { cn } from "@/utils/cn";
+import { cva } from "class-variance-authority";
 import { ThemeProvider } from "@/providers/theme-provider";
-import { StoreProvider } from "@/providers/store-provider";
 import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+// Define body styles using cva
+const bodyStyles = cva(["min-h-screen bg-background font-sans antialiased"], {
+  variants: {
+    fontClass: {
+      default: "",
+    },
+  },
+});
 
 export const metadata: Metadata = {
   title: {
@@ -40,14 +48,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          inter.variable
-        )}
-      >
+      <body className={`${bodyStyles()} ${inter.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <StoreProvider>{children}</StoreProvider>
+          {children}
         </ThemeProvider>
       </body>
     </html>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import type { ButtonHTMLAttributes } from "react";
 
 export default function Error({
   error,

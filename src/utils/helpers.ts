@@ -20,3 +20,7 @@ export function filterAndConvertParams<T extends Record<string, any>>(
 function isDate(value: Date): value is Date {
   return value instanceof Date;
 }
+
+export function isBrowser(): boolean {
+  return typeof window !== "undefined";
+}

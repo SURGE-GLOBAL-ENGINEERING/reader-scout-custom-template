@@ -1,6 +1,16 @@
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { Metadata } from "next";
-import { siteConfig } from "@/config/site";
 import Image from "next/image";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { StorageExample } from "@/examples/storage-example";
+import Link from "next/link";
+
+// Only dynamically import client components
+const CartStoreExample = dynamic(
+  () => import("@/examples/cart-example").then((mod) => mod.CartStoreExample),
+  { ssr: false }
+);
 
 export const metadata: Metadata = {
   title: "Home",
@@ -8,100 +18,87 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1 className="text-4xl font-bold">Welcome to {siteConfig.name}</h1>
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b">
+        <div className="container mx-auto px-8 py-4 flex items-center justify-between">
+          {/* Add navigation links */}
+          <nav>
+            <ul className="flex gap-6">
+              <li>
+                <Link
+                  href="/"
+                  className="text-foreground hover:text-primary transition-colors"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/books"
+                  className="text-foreground hover:text-primary transition-colors"
+                >
+                  Books
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <ThemeToggle />
         </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-8 py-12 space-y-16">
+        {/* Hero Section */}
+        <section className="text-center space-y-6">
+          <h1 className="text-4xl font-bold">
+            Custom Author Website Boilerplate
+          </h1>
+          <Image
+            className="dark:invert mx-auto mt-2"
+            src="/next.svg"
+            alt="Next.js logo"
+            width={120}
+            height={25}
+            priority
+          />
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            A comprehensive starter template with Next.js 14+, TypeScript,
+            Tailwind CSS, and more.
+          </p>
+        </section>
+
+        {/* Examples Section */}
+        <section className="space-y-8">
+          {/* Cart Store Example */}
+          <div className="p-6 border rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <h2 className="text-xl font-semibold mb-4">Cart Store Example</h2>
+            <Suspense
+              fallback={
+                <div className="h-[200px] flex items-center justify-center text-muted-foreground">
+                  Loading cart example...
+                </div>
+              }
+            >
+              <CartStoreExample />
+            </Suspense>
+          </div>
+
+          {/* Storage Example */}
+          <div className="p-6 border rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <h2 className="text-xl font-semibold mb-4">
+              Local Storage Example
+            </h2>
+            <StorageExample />
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Footer */}
+      <footer className="border-t mt-20">
+        <div className="container mx-auto px-8 py-6 text-center text-sm text-muted-foreground">
+          Built with Next.js, TypeScript, and Tailwind CSS
+        </div>
       </footer>
     </div>
   );

@@ -1,6 +1,6 @@
 export const API = {
   GET_BOOKS_BY_IDS: {
-    path: "/books/books-by-ids",
+    path: "/customer-common/books",
   },
 } as const;
 
