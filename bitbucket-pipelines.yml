@@ -12,6 +12,8 @@ pipelines:
               template-setup.mjs
               bitbucket-pipelines.yml
               EOF
+            - git rm --cached template-setup.mjs bitbucket-pipelines.yml
+            - git commit -m "Remove template files from git tracking"
             - git remote add github "https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/SURGE-GLOBAL-ENGINEERING/reader-scout-custom-template.git"
             - git push github dev:main --force
             - git push github --tags
